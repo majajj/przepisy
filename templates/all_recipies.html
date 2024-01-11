@@ -22,7 +22,7 @@
 <a href="{% url 'new_recipe' %}">Add New Recipe</a>
 {% endif %}
 
-{% if not recipies|length == 0 %}
+{% if recipies|length == 0 %}
 <h2>Brak przepisów</h2>
 {% else %}
 {% for recipe in recipies %}
