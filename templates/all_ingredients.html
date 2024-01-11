@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+{% block title %} Lista Składników {% endblock %}
+
+{% block page %}
+{% csrf_token %}
+<div class="jumbotron">
+    {% if user.is_authenticated %}
+    <h1 class="display-4">Witaj {{ user.username }}</h1>
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+
+{% if ingredients|length == 0 %}
+<h2>Brak przepisów</h2>
+{% else %}
+{% for ingredient in ingredients %}
+    <ul>
+                <li><h7>{{ ingredient.name }}</h7></li>
+    </ul>
+    {% endfor %}
+    {% endif %}
+
+    {% endblock %}

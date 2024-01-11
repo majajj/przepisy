@@ -1,0 +1,98 @@
+{% extends 'main.html' %}
+
+{% block title %} Lista Przepisów {% endblock %}
+
+{% block page %}
+{% csrf_token %}
+<div class="jumbotron">
+    {% if user.is_authenticated %}
+    <h1 class="display-4">Witaj {{ user.username }}</h1>
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+    <form action="{% url 'filtered_recipies' %}" method="get">
+        <input name="q" type="text" placeholder="Search...">
+    </form>
+</div>
+
+{% if filtered %}
+<a href="{% url 'all_recipies' %}">Back</a>
+{% else %}
+<a href="{% url 'new_recipe' %}">Add New Recipe</a>
+{% endif %}
+
+{% if recipies|length == 0 %}
+<h2>Brak przepisów</h2>
+{% else %}
+{% for recipe in recipies %}
+<div class="card">
+    <div class="card-body">
+        <div class="row text-center align-items-center">
+            <div class="col">
+                <h5 class="card-title ">
+                    <div class="col-9">
+                        <a href="#" style="color:black;">
+                            {{ recipe.name }}
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a href="{% url 'new_ingredient' recipe.id %}">dodaj składnik</a>
+                    </div>
+                </h5>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6 ">
+                    <a href="#" class="badge badge-primary">
+                    {% for tag in recipe.tags.all %}
+                        {{ tag }}
+                    {% endfor %}
+                    </a>
+                    <a href="#" class="badge badge-success">
+                    {% for category in recipe.category.all %}
+                        {{ category }}
+                    {% endfor %}
+                    </a>
+                </div>
+            </div>
+            <div>
+                {% if recipe.preparation_time %}
+                 <p>Czas przygotowania: {{ recipe.preparation_time }}<p/>
+                {% endif %}
+            </div>
+            <div class="row border-between hr">
+
+                <div class="col-4">
+
+                    <ul>
+                        {% for ingredient in ingredients.all %}
+                            {% if  ingredient.recipe.id == recipe.id%}
+                                <li>
+                                    {{ ingredient.ingredient }}:
+                                    {{ ingredient.measurement_qty.qty_amount }}
+                                    {{ ingredient.measurement }}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+                <div class="col-8">
+
+                    {{ recipe.description }}
+                </div>
+                <div>
+                    {% if recipe.bake_temp %}
+                     <p>Piecz w temperaturze: {{ recipe.bake_temp }}&deg;C<p/>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% endblock %}

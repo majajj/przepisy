@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+{% load bootstrap %}
+{% block title %} Nowy Przepis {% endblock %}
+
+{% block page %}
+<div class="card" style="width: 32rem;">
+    <div class="card-body">
+        <h5 class="card-title">Nowy Przepis</h5>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ form_recipe|bootstrap }}
+            <button type="submit" class="btn btn-primary">Zapisz</button>
+
+        </form>
+    </div>
+</div>
+
+<a href="{% url 'all_recipies' %}">Back</a>
+{% endblock %}
