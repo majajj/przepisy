@@ -23,7 +23,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
-    # 'django-insecure-6-uhf-#7ueu_!lby9o_b-l%m^)l2dz^i%-42*9-gp7jd43r$uk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
@@ -86,7 +85,7 @@ DATABASES = {
 }
 database_url = os.environ.get("DATABASE_URL")
 DATABASES["default"] = dj_database_url.parse(database_url)
-# 'postgres://przepisy_django_render_user:FaNm0VkrTrPbTkUSPfDYBaSW7AiGC17L@dpg-cmfu9beg1b2c73cpuk10-a.oregon-postgres.render.com/przepisy_django_render
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
