@@ -75,7 +75,7 @@ def new_recipe(request):
     form_recipe = RecipeForm(request.POST or None)
 
     if form_recipe.is_valid():
-        recipe = form_recipe.save()
+        recipe = form_recipe.instance
         obj, created = Recipe.objects.get_or_create(
             name=recipe.name.title(),
             preparation_time=recipe.preparation_time or None,
